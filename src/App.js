@@ -11,7 +11,13 @@ class App extends React.Component {
 
     const {configuration} = props;
 
-    //FlexWebChat.MessageBubble.Content.add(<CustomButtons key='custom-buttons' />);
+    FlexWebChat.Actions.on('beforeSendMessage', (payload) => {
+      const creditCardRegex = /\b(?:\d{4}[ -]?){3}(?=\d{4}\b)/gm
+
+      if (payload.body.match(creditCardRegex)) {
+        payload.body = 'Please do not share sensitive information in webchat';
+      }
+    });
 
     FlexWebChat.Manager.create(configuration)
       .then(manager => {
