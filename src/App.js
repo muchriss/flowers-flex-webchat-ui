@@ -1,6 +1,6 @@
 import React from 'react';
 import * as FlexWebChat from '@twilio/flex-webchat-ui';
-import CustomButtons from './CustomButtons';
+import CustomChatMessage from './CustomChatMessage';
 
 class App extends React.Component {
 
@@ -16,7 +16,8 @@ class App extends React.Component {
     FlexWebChat.Manager.create(configuration)
       .then(manager => {
         this.setState({manager});
-        FlexWebChat.MessageBubble.Content.add(<CustomButtons key='custom-buttons' manager={manager}/>);
+        FlexWebChat.MessageBubble.Content.remove("body");
+        FlexWebChat.MessageBubble.Content.add(<CustomChatMessage key='custom-chat-message' manager={manager}/>);
       })
       .catch(error => this.setState({ error }));
   }

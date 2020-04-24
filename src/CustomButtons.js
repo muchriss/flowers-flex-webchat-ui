@@ -10,17 +10,22 @@ const CustomButtons = (props) => {
     Actions.invokeAction('SendMessage', {channelSid: channelSid, body: e.currentTarget.value});
   }
 
-  if (!props.message.isFromMe && props.message.source && props.message.source.body === 'Please select one of the options below') {
+  const {buttonData} = props;
+
+  if (typeof buttonData === 'undefined') {
+    return (
+      <div />
+    )
+  } else {
+    const buttons = buttonData.Buttons;
     return (
       <div>
-        <Button variant='contained' value='Option 1' onClick={onClick}>Option 1</Button>
-        <Button variant='contained' value='Option 2' onClick={onClick}>Option 2</Button>
-        <Button variant='contained' value='Option 3' onClick={onClick}>Option 3</Button>
+        {
+          buttons.map((button, i) => {
+            return (<Button variant='contained' value={button} key={button} onClick={onClick}>{button}</Button>);
+          })
+        }
       </div>
-    );
-  } else {
-    return (
-      <div/>
     )
   }
 };
