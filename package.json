@@ -9,6 +9,7 @@
     "react": "^16.5.2",
     "react-app-polyfill": "^1.0.1",
     "react-dom": "^16.5.2",
+    "react-linkify": "^1.0.0-alpha",
     "react-scripts": "2.0.5"
   },
   "scripts": {

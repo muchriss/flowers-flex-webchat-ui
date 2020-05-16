@@ -2,6 +2,8 @@ import React from 'react';
 import Button from '@material-ui/core/Button';
 import {Actions} from '@twilio/flex-webchat-ui';
 
+
+
 // It is recommended to keep components stateless and use redux for managing states
 const CustomButtons = (props) => {
 
@@ -22,7 +24,7 @@ const CustomButtons = (props) => {
       <div>
         {
           buttons.map((button, i) => {
-            return (<Button variant='contained' value={button} key={button} onClick={onClick}>{button}</Button>);
+            return (<Button variant='contained' style={{textTransform: 'none'}}value={button} key={button} onClick={onClick}>{button}</Button>);
           })
         }
       </div>

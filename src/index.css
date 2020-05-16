@@ -1,17 +1,18 @@
-body, #root {
+body,
+#root {
   margin: 0;
   padding: 0;
   width: 100vw;
   height: 100vh;
   display: flex;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
   position: relative;
   background-size: cover;
   background-image: url("/img/background.png");
-  background-color: #6D7697;
+  background-color: #6d7697;
 }
 
 body:after {
@@ -25,4 +26,32 @@ body:after {
   margin-top: -91px;
   opacity: 0.2;
   background: url("/img/logo.svg");
+}
+
+.Twilio-MainContainer {
+  position: absolute; 
+  left: 0 !important;
+  right: 0 !important;
+  top: 0 !important;
+  bottom: 0 !important;
+  margin: auto !important;
+
+  max-width: 100% !important;
+  max-height: 100% !important;
+  overflow: auto !important;
+}
+
+@media only screen and (min-width: 700px) {
+  .Twilio-MainContainer {
+    width: 50% !important;
+  }
+}
+
+@media only screen and (min-width: 1275px) {
+  .Twilio-MainContainer {
+    width: 35% !important;
+  }
+}
+.Twilio-MainHeader-end {
+  visibility: hidden;
 }
