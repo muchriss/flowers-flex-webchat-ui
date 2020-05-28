@@ -24,9 +24,7 @@ class App extends React.Component {
 
     FlexWebChat.Manager.create(configuration)
       .then((manager) => {
-        manager.strings.PredefinedChatMessageBody = `Hi there! In order to assist you better, please select one of the options below: {\"Buttons\": [\"customer\",\"other\"]} `;
-        manager.strings.Reset = "RESET";
-        console.log(manager.strings);
+        manager.strings.PredefinedChatMessageBody = `Hi there! In order to assist you better, do you have your order number available?: {\"Buttons\": [\"Yes\",\"No\"]} `;
         this.setState({ manager });
 
         FlexWebChat.MessageBubble.Content.remove("body");
@@ -37,12 +35,15 @@ class App extends React.Component {
       .catch((error) => this.setState({ error }));
   }
 
+  componentDidMount = () => {
+    FlexWebChat.Actions.invokeAction("RestartEngagement");
+  };
+
   render() {
     const { manager, error } = this.state;
     if (manager) {
       return (
         <FlexWebChat.ContextProvider manager={manager}>
-          {/* <FlexWebChat.RootContainer /> */}
           <FlexWebChat.MainContainer />
         </FlexWebChat.ContextProvider>
       );
