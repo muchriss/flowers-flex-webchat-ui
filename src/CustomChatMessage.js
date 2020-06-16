@@ -1,6 +1,7 @@
 import React from "react";
 import CustomButtons from "./CustomButtons";
 import Linkify from "react-linkify";
+import renderHTML from 'react-render-html';
 
 // It is recommended to keep components stateless and use redux for managing states
 const CustomChatMessage = (props) => {
@@ -31,10 +32,10 @@ const CustomChatMessage = (props) => {
               </a>
             )}
           >
-            <p style={{ whiteSpace: "pre-line" }}>{text}</p>
+            <p style={{ whiteSpace: "pre-line" }}>{renderHTML(text)}</p>
           </Linkify>
         ) : (
-          <p style={{ whiteSpace: "pre-line" }}>{text}</p>
+          <p style={{ whiteSpace: "pre-line" }}>{renderHTML(text)}</p>
         )}
 
         <CustomButtons buttonData={buttonData} manager={props.manager} />
