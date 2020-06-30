@@ -1,5 +1,5 @@
 import React from "react";
-import TwilioFlexWebChat from "./Components/TwilioFlexWebChat"
+import TwilioFlexWebChat from "./components/TwilioFlexWebChat"
 class App extends React.Component {
 
   render() {
