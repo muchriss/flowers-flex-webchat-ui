@@ -12,9 +12,9 @@ This package can only be consumed together with Twilio Flex. Visit http://twilio
 ```
 npm install
 ```
-2. Copy webchat-appConfig.sample.js in public/assets folder and configure accordingly to use your Twilio account
+2. Create an .env file and add the SIDs to use your Twilio account
 ```
-cp public/assets/webchat-appConfig.sample.js public/assets/webchat-appConfig.js
+Look the .env.sample as guidance 
 ```
 3. Start Flex UI by running:
 ```

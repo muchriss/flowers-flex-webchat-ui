@@ -1,17 +1,19 @@
-body, #root {
+@import url('https://fonts.googleapis.com/css?family=Hind:300,400,500,600,700&display=swap');
+body,
+#root {
   margin: 0;
   padding: 0;
   width: 100vw;
   height: 100vh;
   display: flex;
-  font-family: 'Open Sans', sans-serif;
+  font-family: "Open Sans", sans-serif;
 }
 
 body {
   position: relative;
   background-size: cover;
   background-image: url("/img/background.png");
-  background-color: #6D7697;
+  background-color: #6d7697;
 }
 
 body:after {
@@ -25,4 +27,22 @@ body:after {
   margin-top: -91px;
   opacity: 0.2;
   background: url("/img/logo.svg");
+}
+
+.Twilio-ChatItem-Avatar img {
+  width: 100% !important;
+  height: 100% !important;
+  border: 1px solid #cccccc;
+  border-radius: 50%;
+  padding: 2px;
+}
+
+.Twilio-MainContainer {
+  font-family: Hind;
+  font-size: medium;
+}
+
+.Twilio-MessageBubble {
+  border: 1px solid #cccccc;
+  border-radius: 5px;
 }
