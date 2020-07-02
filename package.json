@@ -5,10 +5,13 @@
   "dependencies": {
     "@twilio/flex-webchat-ui": "^2.0.0",
     "array-findindex-polyfill": "^0.1.0",
+    "dotenv": "^8.2.0",
     "ie-array-find-polyfill": "^1.1.0",
     "react": "^16.5.2",
     "react-app-polyfill": "^1.0.1",
     "react-dom": "^16.5.2",
+    "react-linkify": "^1.0.0-alpha",
+    "react-render-html": "^0.6.0",
     "react-scripts": "2.0.5"
   },
   "scripts": {

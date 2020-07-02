@@ -1,0 +1,39 @@
+# dotenv environment variables file
+.env
+.env.test
+
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+
+# Dependency directories
+node_modules/
+
+build/
+
+.DS_STORE
+scripts/flow/*/.flowconfig
+.flowconfig
+*~
+*.pyc
+.grunt
+_SpecRunner.html
+_benchmarks_
+remote-repo/
+coverage/
+.module-cache
+fixtures/dom/public/react-dom.js
+fixtures/dom/public/react.js
+test/the-files-to-test.generated.js
+chrome-user-data
+*.sublime-project
+*.sublime-workspace
+.idea
+*.iml
+.vscode
+*.swp
+*.swo
