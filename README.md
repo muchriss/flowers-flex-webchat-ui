@@ -45,5 +45,4 @@ messageAttributes  =  {
     cartValue:  0,
     };
 ```
-
-3. Take a look in the code at ```src/components/TwilioFlexWebChat.js``` in the ```beforeSendMessage``` action
+ Code can be found at: ```src/components/TwilioFlexWebChat.js``` in the ```beforeSendMessage``` action
