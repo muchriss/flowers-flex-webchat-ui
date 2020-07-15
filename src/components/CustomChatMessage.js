@@ -1,12 +1,12 @@
-import React from 'react';
-import Linkify from 'react-linkify';
-import renderHTML from 'react-render-html';
-import CustomChatButtons from './CustomChatButton';
+import React from "react";
+import Linkify from "react-linkify";
+import renderHTML from "react-render-html";
+import CustomChatButtons from "./CustomChatButton";
 
 const textStyles = {
-  whiteSpace: 'pre-line',
-  overflowWrap: 'anywhere',
-  padding: '0 10px',
+  whiteSpace: "pre-line",
+  overflowWrap: "anywhere",
+  padding: "0 10px",
 };
 
 const CustomChatMessage = (props) => {
@@ -16,9 +16,9 @@ const CustomChatMessage = (props) => {
 
   if (message.source) {
     // eslint-disable-next-line lodash/prefer-includes
-    if (message.source.body.indexOf('{') !== -1) {
-      text = message.source.body.split('{')[0];
-      buttonData = JSON.parse(`{${message.source.body.split('{')[1]}`);
+    if (message.source.body.indexOf("{\"Buttons\"") !== -1) {
+      text = message.source.body.split("{")[0];
+      buttonData = JSON.parse(`{${message.source.body.split("{")[1]}`);
     } else {
       text = message.source.body;
     }
@@ -27,10 +27,17 @@ const CustomChatMessage = (props) => {
 
     return (
       <div>
-        {text.includes('http') ? (
+        {text.includes("http") ? (
           <Linkify
             componentDecorator={(decoratedHref, decoratedText, key) => (
-              <a target="blank" href={decoratedHref} key={key} style={{ overflowWrap: 'anywhere' }}>{decoratedText}</a>
+              <a
+                target="blank"
+                href={decoratedHref}
+                key={key}
+                style={{ overflowWrap: "anywhere" }}
+              >
+                {decoratedText}
+              </a>
             )}
           >
             <p style={textStyles}>{renderHTML(text)}</p>
@@ -42,11 +49,7 @@ const CustomChatMessage = (props) => {
       </div>
     );
   }
-  return (
-    <div>
-        This is an empty div
-    </div>
-  );
+  return <div>This is an empty div</div>;
 };
 
 export default CustomChatMessage;
