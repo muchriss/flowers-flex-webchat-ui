@@ -19,6 +19,7 @@ const brandMessageBubbleColors = (bgColor, color) => ({
 class TwilioFlexWebChat extends React.Component {
   state = {
     FlexWebChat: null,
+    isFirstMessage: true,
   };
 
   async getChatClient() {
@@ -90,23 +91,51 @@ class TwilioFlexWebChat extends React.Component {
 
     this.getChatClient().then((FlexWebChat) => {
       FlexWebChat.Actions.on("beforeSendMessage", (payload) => {
+        const { isFirstMessage } = this.state;
         const creditCardRegex = /\b(?:\d{4}[ -]?){3}(?=\d{4}\b)/gm;
 
         if (payload.body.match(creditCardRegex)) {
           payload.body = "Please do not share sensitive information in webchat";
         }
+
+        //Here send session information to twilio chatbot
+        if (isFirstMessage) {
+          const messageAttributes = {
+            errorCodes: [
+              {
+                UserLoginError: "You have entered an invalid email or password",
+              },
+              { HomePageDataError: "Request failed with status code 500" },
+            ],
+            referringPage: window.location.pathname,
+            cartValue: 0,
+          };
+          this.setState((prevState) => ({
+            ...prevState,
+            isFirstMessage: false,
+          }));
+          return (payload.messageAttributes = messageAttributes);
+        }
       });
 
       FlexWebChat.Actions.on("afterMinimizeChat", () => {
+        this.setState((prevState) => ({
+          ...prevState,
+          isFirstMessage: true,
+        }));
         FlexWebChat.Actions.invokeAction("RestartEngagement");
       });
 
       FlexWebChat.Manager.create(appConfig)
         .then((manager) => {
+          const { pathname } = window.location;
           // Changing the Welcome message
           manager.strings.PredefinedChatMessageAuthorName = "1-800-Flowers";
+
           manager.strings.PredefinedChatMessageBody =
-            'Hi there! In order to assist you better, do you have your order number available? {"Buttons": ["Yes","No"]}';
+            pathname === "/customer-service"
+              ? 'Hi there! In order to assist you better, do you have your order number available? {"Buttons": ["Yes","No"]}'
+              : "Hi there! How can I assist you today?";
 
           this.setState({ manager });
           FlexWebChat.MessageListItem.defaultProps.avatarUrl =
