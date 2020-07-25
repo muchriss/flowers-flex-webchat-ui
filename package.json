@@ -11,6 +11,7 @@
     "react-app-polyfill": "^1.0.1",
     "react-dom": "^16.5.2",
     "react-linkify": "^1.0.0-alpha",
+    "react-rating-stars-component": "^2.2.0",
     "react-render-html": "^0.6.0",
     "react-scripts": "2.0.5"
   },
@@ -31,6 +32,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "css-loader": "^3.6.0",
     "react-app-rewired": "^2.1.5"
   }
 }
