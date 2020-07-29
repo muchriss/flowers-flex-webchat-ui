@@ -12,6 +12,7 @@ const rating = (props) => {
         size={24}
         isHalf={true}
         activeColor="#ffd700"
+        onChange={props.onRatingChange}
       />
     </Grid>
   );

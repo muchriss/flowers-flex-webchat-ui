@@ -1,6 +1,6 @@
 /* eslint-disable no-useless-escape */
-import React from "react";
-import CustomChatMessage from "./CustomChatMessage";
+import React from 'react';
+import CustomChatMessage from './CustomChatMessage';
 
 const brandMessageBubbleColors = (bgColor, color) => ({
   Bubble: {
@@ -20,15 +20,30 @@ class TwilioFlexWebChat extends React.Component {
   state = {
     FlexWebChat: null,
     isFirstMessage: true,
+    ratingValue: 0, 
   };
 
   async getChatClient() {
     const FlexWebChat = await new Promise((resolve) =>
-      import("@twilio/flex-webchat-ui").then(resolve)
+      import('@twilio/flex-webchat-ui').then(resolve)
     );
     this.setState({ FlexWebChat });
     return FlexWebChat;
   }
+
+  onRatingChange = (newRating) => {
+    this.setState((prevState) => ({
+      ...prevState,
+      ratingValue: newRating,
+    }));
+
+    console.log('RATING CHANGE: ', newRating);
+  };
+
+  getRatingValue = () => {
+    return this.state.ratingValue
+  }
+  
 
   componentDidMount = () => {
     const appConfig = {
@@ -36,18 +51,18 @@ class TwilioFlexWebChat extends React.Component {
       flexFlowSid: process.env.REACT_APP_TWILIO_FLEX_FLOW_SID,
       componentProps: {
         MainContainer: {
-          width: "400px",
+          width: '400px',
         },
         MainHeader: {
-          titleText: "1-800-Flowers Assistant",
+          titleText: '1-800-Flowers Assistant',
           showImage: true,
-          imageUrl: "/img/18F_Flower_32x32.png",
-          height: "48px",
+          imageUrl: '/img/18F_Flower_32x32.png',
+          height: '48px',
         },
         MessagingCanvas: {
           memberDisplayOptions: {
-            theirDefaultName: "1-800-Flowers",
-            yourDefaultName: "Me",
+            theirDefaultName: '1-800-Flowers',
+            yourDefaultName: 'Me',
             yourFriendlyNameOverride: false,
             theirFriendlyNameOverride: false,
           },
@@ -56,32 +71,32 @@ class TwilioFlexWebChat extends React.Component {
       colorTheme: {
         overrides: {
           MessageBubble: {
-            border: "1px solid black",
+            border: '1px solid black',
           },
           Chat: {
             MessageListItem: {
-              FromOthers: brandMessageBubbleColors("#ffffff", "#000000"),
-              FromMe: brandMessageBubbleColors("#65388b", "#ffffff"),
+              FromOthers: brandMessageBubbleColors('#ffffff', '#000000'),
+              FromMe: brandMessageBubbleColors('#65388b', '#ffffff'),
             },
             MessageInput: {
               Button: {
-                background: "#65388b",
-                color: "#ffffff",
-                opacity: "1 !important",
-                "&:hover": {
-                  background: "#ECEDF1",
-                  color: "#65388b",
+                background: '#65388b',
+                color: '#ffffff',
+                opacity: '1 !important',
+                '&:hover': {
+                  background: '#ECEDF1',
+                  color: '#65388b',
                 },
               },
             },
           },
           EntryPoint: {
             Container: {
-              background: "#65388b !important",
-              color: "#FFFFFF",
-              "&:hover": {
-                background: "#FFFFFF !important",
-                color: "#65388b",
+              background: '#65388b !important',
+              color: '#FFFFFF',
+              '&:hover': {
+                background: '#FFFFFF !important',
+                color: '#65388b',
               },
             },
           },
@@ -90,12 +105,12 @@ class TwilioFlexWebChat extends React.Component {
     };
 
     this.getChatClient().then((FlexWebChat) => {
-      FlexWebChat.Actions.on("beforeSendMessage", (payload) => {
+      FlexWebChat.Actions.on('beforeSendMessage', (payload) => {
         const { isFirstMessage } = this.state;
         const creditCardRegex = /\b(?:\d{4}[ -]?){3}(?=\d{4}\b)/gm;
 
         if (payload.body.match(creditCardRegex)) {
-          payload.body = "Please do not share sensitive information in webchat";
+          payload.body = 'Please do not share sensitive information in webchat';
         }
 
         //Here send session information to twilio chatbot
@@ -103,9 +118,9 @@ class TwilioFlexWebChat extends React.Component {
           const messageAttributes = {
             errorCodes: [
               {
-                UserLoginError: "You have entered an invalid email or password",
+                UserLoginError: 'You have entered an invalid email or password',
               },
-              { HomePageDataError: "Request failed with status code 500" },
+              { HomePageDataError: 'Request failed with status code 500' },
             ],
             referringPage: window.location.pathname,
             cartValue: 0,
@@ -118,33 +133,38 @@ class TwilioFlexWebChat extends React.Component {
         }
       });
 
-      FlexWebChat.Actions.on("afterMinimizeChat", () => {
+      FlexWebChat.Actions.on('afterMinimizeChat', () => {
         this.setState((prevState) => ({
           ...prevState,
           isFirstMessage: true,
         }));
-        FlexWebChat.Actions.invokeAction("RestartEngagement");
+        FlexWebChat.Actions.invokeAction('RestartEngagement');
       });
 
       FlexWebChat.Manager.create(appConfig)
         .then((manager) => {
           const { pathname } = window.location;
           // Changing the Welcome message
-          manager.strings.PredefinedChatMessageAuthorName = "1-800-Flowers";
+          manager.strings.PredefinedChatMessageAuthorName = '1-800-Flowers';
 
           manager.strings.PredefinedChatMessageBody =
-            pathname === "/customer-service"
+            pathname === '/customer-service'
               ? 'Hi there! In order to assist you better, do you have your order number available? {"Buttons": ["Yes","No"]}'
-              : "Hi there! How can I assist you today?";
+              : 'Hi there! How can I assist you today?';
 
           this.setState({ manager });
           FlexWebChat.MessageListItem.defaultProps.avatarUrl =
-            "/img/18F_Flower_32x32.png";
-          FlexWebChat.MessageBubble.Content.remove("body");
+            '/img/18F_Flower_32x32.png';
+          FlexWebChat.MessageBubble.Content.remove('body');
           FlexWebChat.MessageBubble.Content.add(
-            <CustomChatMessage key="custom-chat-message" manager={manager} />
+            <CustomChatMessage
+              key="custom-chat-message"
+              manager={manager}
+              onRatingChange={this.onRatingChange}
+              ratingValue={this.getRatingValue}
+            />
           );
-          FlexWebChat.Actions.invokeAction("RestartEngagement");
+          FlexWebChat.Actions.invokeAction('RestartEngagement');
         })
         .catch((error) => this.setState({ error }));
     });
@@ -162,7 +182,7 @@ class TwilioFlexWebChat extends React.Component {
     }
 
     if (error) {
-      console.error("Failed to initialize Flex Web Chat", error);
+      console.error('Failed to initialize Flex Web Chat', error);
     }
 
     return null;

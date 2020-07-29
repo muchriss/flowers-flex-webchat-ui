@@ -42,7 +42,11 @@ const CustomChatMessage = (props) => {
   };
 
   const renderRatingComponent = () => {
-    return hasMessageIncludesRating && <Rating></Rating>;
+    return (
+      hasMessageIncludesRating && (
+        <Rating onRatingChange={props.onRatingChange}></Rating>
+      )
+    );
   };
 
   if (message.source) {
@@ -63,7 +67,12 @@ const CustomChatMessage = (props) => {
       <div>
         {renderLinks()}
         {renderRatingComponent()}
-        <CustomChatButtons buttonData={buttonData} manager={props.manager} />
+        <CustomChatButtons
+          buttonData={buttonData}
+          manager={props.manager}
+          hasMessageIncludesRating={hasMessageIncludesRating}
+          ratingValue={props.ratingValue}
+        />
       </div>
     );
   }
