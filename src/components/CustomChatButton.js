@@ -48,10 +48,6 @@ const styles = {
 };
 
 class CustomChatButtons extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   state = {
     disableButtons: false,
   };
