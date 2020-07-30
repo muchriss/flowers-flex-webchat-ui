@@ -48,9 +48,31 @@ const styles = {
 };
 
 class CustomChatButtons extends React.Component {
-  state = {
-    disableButtons: false,
-  };
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      disableButtons: false,
+      wasClicked: false,
+    };
+  }
+
+  componentDidMount() {
+    if (
+      this.props.hasMessageIncludesRating &&
+      this.props.ratingValue() === null
+    ) {
+      this.setState({ disableButtons: true });
+    }
+  }
+
+  componentWillReceiveProps(newProps) {
+    if (newProps.hasMessageIncludesRating && newProps.ratingValue() !== null) {
+      this.state.wasClicked
+        ? this.setState({ disableButtons: true })
+        : this.setState({ disableButtons: false });
+    }
+  }
 
   onClick = (e) => {
     const value = this.props.hasMessageIncludesRating
@@ -63,7 +85,8 @@ class CustomChatButtons extends React.Component {
         channelSid,
         body: value,
       });
-      this.setState({ disableButtons: true });
+
+      this.setState({ disableButtons: true, wasClicked: true });
     });
   };
 
