@@ -2,3 +2,7 @@
   justify-content: center !important;
   padding: 0 10px 0 10px !important;
 }
+
+.rating.react-stars:focus {
+  outline: 0 !important;
+}
