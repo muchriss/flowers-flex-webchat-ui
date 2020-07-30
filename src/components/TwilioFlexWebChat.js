@@ -20,7 +20,7 @@ class TwilioFlexWebChat extends React.Component {
   state = {
     FlexWebChat: null,
     isFirstMessage: true,
-    ratingValue: 0, 
+    ratingValue: null,
   };
 
   async getChatClient() {
@@ -32,18 +32,12 @@ class TwilioFlexWebChat extends React.Component {
   }
 
   onRatingChange = (newRating) => {
-    this.setState((prevState) => ({
-      ...prevState,
-      ratingValue: newRating,
-    }));
-
-    console.log('RATING CHANGE: ', newRating);
+    this.setState({ ratingValue: newRating });
   };
 
   getRatingValue = () => {
-    return this.state.ratingValue
-  }
-  
+    return this.state.ratingValue;
+  };
 
   componentDidMount = () => {
     const appConfig = {
@@ -137,6 +131,7 @@ class TwilioFlexWebChat extends React.Component {
         this.setState((prevState) => ({
           ...prevState,
           isFirstMessage: true,
+          ratingValue: null,
         }));
         FlexWebChat.Actions.invokeAction('RestartEngagement');
       });
@@ -160,8 +155,8 @@ class TwilioFlexWebChat extends React.Component {
             <CustomChatMessage
               key="custom-chat-message"
               manager={manager}
-              onRatingChange={this.onRatingChange}
-              ratingValue={this.getRatingValue}
+              onRatingChange={this.onRatingChange.bind(this)}
+              ratingValue={this.getRatingValue.bind(this)}
             />
           );
           FlexWebChat.Actions.invokeAction('RestartEngagement');
