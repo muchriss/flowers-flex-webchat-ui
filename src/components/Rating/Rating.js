@@ -10,7 +10,6 @@ const rating = (props) => {
         classNames={'rating'}
         count={5}
         size={24}
-        isHalf={true}
         activeColor="#ffd700"
         onChange={props.onRatingChange}
       />
